@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title"><i class="material-icons">person</i> New Member Details</span>
+        <form action="/subadmin/add/new/member" method="POST">
+          <div class="input-field">
+            <i class="material-icons prefix">person</i>
+            <input type="text" name="firstName" id="mFirstName" value="{{firstName}}" required>
+            <label for="firstName" id="mFirstName1">First Name</label>
+          </div>
+          <div class="input-field">
+            <i class="material-icons prefix">person</i>
+            <input type="text" name="lastName" id="mLastName" value="{{lastName}}" required>
+            <label for="lastName" id="mLastName1">Last Name</label>
+          </div>
+          <div class="input-field">
+            <i class="material-icons prefix">wc</i>
+            <select name="gender" id="mGender" required>
+              <option id="mColour1" value="Male">Male</option>
+              <option id="mColour2" value="Female" >Female</option>
+            </select>
+            <label for="gender">Gender</label>
+          </div>
+          <div class="input-field">
+            <i class="material-icons prefix">local_library</i>
+            <input type="text" name="programme" id="mProgramme" value="{{programme}}" required>
+            <label for="programme" id="mProgramme1">Programme</label>
+          </div>
+          <div class="input-field">
+            <i class="material-icons prefix">flag</i>
+            <input type="text" name="nationality" id="mNationality" value="{{nationality}}" required>
+            <label for="nationality" id="mNationality1">Nationality</label>
+          </div>
+          <div class="input-field">
+            <i class="material-icons prefix">location_city</i>
+            <input type="text" name="city" id="mCity" value="{{city}}" required>
+            <label for="city" id="mCity1">City</label>
+          </div>
+          <div class="input-field">
+            <i class="material-icons prefix">date_range</i>
+            <input type="date" name="dob" id="mDOB" value="{{dob}}" required>
+            <label for="dob"></label>
+          </div>
+          <div class="input-field">
+            <i class="material-icons prefix">email</i>
+            <input type="email" name="email" id="mEmail" value="{{email}}" required>
+            <label for="email" id="mEmail1">Email Address</label>
+          </div>
+          <div class="input-field">
+            <i class="material-icons prefix">phone</i>
+            <input type="number" name="mobileNumber" id="mNumber" value="{{number}}" required>
+            <label for="mobileNumber" id="mNumber1">Mobile Number</label>
+          </div>
+        </div>       
+        <div class="card-action">
+          <button type="submit" class="btn blue darken-3 waves-effect">Add Member</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

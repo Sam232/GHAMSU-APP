@@ -1,0 +1,36 @@
+<div class="row">  
+  <div class="col s12">   
+    <div class="card">      
+      <div class="card-content"> 
+        <span class="card-title">
+          <h5><i class="material-icons">edit</i>Update Details</h5> 
+        </span>       
+        <form action="/subadmin/update/sub_admin/{{subAdminId}}?_method=PUT" method="POST">
+          <div class="input-field">
+            <i class="material-icons prefix active">person</i>
+            <input type="text" id="userName01" name="username" value="" required>
+            <label id="userName02" for="userName">Username</label>
+          </div>
+          <div class="input-field">
+            <i class="material-icons prefix active">phone</i>
+            <input type="number" id="phone01" name="mobileNumber" value="" required>
+            <label id="phone02" for="phone02">Mobile Number</label>
+          </div> 
+          <div class="input-field">
+            <i class="material-icons prefix active">lock_outline</i>
+            <input type="password" id="password01" name="oldPassword" value="" required>
+            <label id="password02" for="password1">Old Password</label>
+          </div>   
+          <div class="input-field">
+            <i class="material-icons prefix active">lock_outline</i>
+            <input type="password" id="password03" name="newPassword" value="" required>
+            <label id="password04" for="password2">New Password</label>
+          </div>      
+      </div>
+      <div class="card-action">
+        <button type="submit" class="btn waves-effect blue darken-3">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

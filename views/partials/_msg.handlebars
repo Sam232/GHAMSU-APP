@@ -1,0 +1,36 @@
+{{#if success_msg}}
+  <div class="card">
+    <div class="card-content green darken-2">
+      <p class="white-text">{{success_msg}}</p>
+    </div>
+  </div>
+{{/if}}
+
+{{#if error_msg}}
+  <div class="card">
+    <div class="card-content red darken-2">
+      <p class="white-text">{{error_msg}}</p>
+    </div>
+  </div>
+{{/if}}
+
+{{!-- {{#if deletedSubAdmin}}
+  <div class="card">
+    <div class="card-content red darken-2">
+      <span class="white-text">{{deletedSubAdmin}}
+        <form action="/admin/delete/undo" method="POST">
+          <input type="hidden" name="subAdminDetails" value={{deletedDetails}}>
+          <button class="btn blue darken-3 waves-effect" type="submit">Undo</button>
+        </form>
+      </span>
+    </div>
+  </div>
+{{/if}} --}}
+
+{{#if error}}
+  <div class="card">
+    <div class="card-content red darken-3">
+      <p class="white-text">{{error}}</p>
+    </div>
+  </div>
+{{/if}}

@@ -1,0 +1,44 @@
+.logo{
+  width: 180px;
+  margin-top: -30px;
+  margin: auto;
+}
+
+.logo2{
+  width: 100px;
+  margin-left: 95px;
+}
+
+.login{
+  margin-top: 30px
+}
+
+.logo3{
+  margin-top: 30px
+}
+
+.push{
+  padding-left: 205px;
+}
+
+.searchForm{
+  margin-top: 10px
+}
+
+.footer{
+  margin-top: 157px;
+}
+
+.input-field .prefix.active {
+  color:#1565c0;
+}
+
+container, header, main, footer {
+  padding-left: 300px;
+}
+
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
+}

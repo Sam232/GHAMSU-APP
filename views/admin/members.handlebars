@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title"><i class="material-icons">groups</i>Members</span>
+        <table class="striped" id="membersTable">
+          <thead>
+            <tr>
+              <td>First Name</td>
+              <td>Last Name</td>
+              <td>Gender</td>
+              <td>Institution</td>
+              <td>Programme</td>
+              <td>More Details</td>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each members}}
+              <tr>
+                <td>{{firstName}}</td>
+                <td>{{lastName}}</td>
+                <td>{{gender}}</td>
+                <td>{{institution}}</td>
+                <td>{{programme}}</td>
+                <td><a href="/admin/member/{{_id}}" class="btn blue darken-3 waves-effect modal-trigger">View</a></td>
+              </tr>
+              {{else}}
+                <span>
+                  <h5 class="center">No Members Added.</h5>
+                </span>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

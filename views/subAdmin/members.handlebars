@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title"><i class="material-icons">groups</i>Members</span>
+        <table class="striped" id="membersTable">
+          <thead>
+            <tr>
+              <td>First Name</td>
+              <td>Last Name</td>
+              <td>Gender</td>
+              <td>Institution</td>
+              <td>Programme</td>
+              <td>View</td>
+              <td>Update</td>
+              <td>Delete</td>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each members}}
+              <tr>
+                <td>{{firstName}}</td>
+                <td>{{lastName}}</td>
+                <td>{{gender}}</td>
+                <td>{{institution}}</td>
+                <td>{{programme}}</td>
+                <td><a href="/subadmin/member/{{_id}}" class="btn blue darken-3 waves-effect">View</a></td>
+                <td>
+                  <a href="/subadmin/update/member/{{_id}}" class="btn green darken-3 waves-effect">Update</a>
+                </td>
+                <td>
+                  <form action="/subadmin/delete/member?_method=DELETE" method="POST">
+                    <input type="hidden" name="memberId" value="{{_id}}">
+                    <button type="submit" class="btn red darken-3 waves-effect">Delete</button>
+                  </form>
+                </td>
+              </tr>
+              {{else}}
+                <span>
+                  <h5 class="center">No Members Added.</h5>
+                  <a href="/subadmin/add/new/member">Add A Member</a>
+                </span>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

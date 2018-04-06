@@ -1,0 +1,72 @@
+{{#if mainAdmin}}
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper blue darken-3 accent-3 fixed">
+        <a href="/admin/welcome" class="brand-logo center"><i class="material-icons">contacts</i>Ghamsu</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons left">menu</i></a>
+        <a href="#" data-activates="slide-out" class="button-collapse show-on-large hide-on-med-and-down"><i class="material-icons left">menu</i></a>        
+      </div>
+    </nav>
+  </div>
+  <ul id="mobile-demo" class="side-nav">
+    <li class="logo3"><img src="/img/ghamsu.jpg" class="center logo2" alt=""></li>
+    <li><a href="/admin/add_sub_admins" class="col s12 blue-text"><i class="material-icons blue-text right">person_add</i>Add Sub Admin</a></li>
+    <li><a href="/admin/manage/sub_admins" class="col s12 blue-text"><i class="material-icons blue-text right">settings</i>Manage Sub Admins</a></li>
+    <li><a href="/admin/welcome" class="col s12 blue-text"><i class="material-icons blue-text right">group</i>View Members</a>
+    </li>
+  </ul>
+  <ul id="slide-out" class="side-nav">
+    <li class="logo3"><img src="/img/ghamsu.jpg" class="center logo2" alt=""></li>
+    <li><a href="/admin/add_sub_admins" class="col s12 blue-text"><i class="material-icons blue-text right">person_add</i>Add Sub Admin</a></li>
+    <li><a href="/admin/manage/sub_admins" class="col s12 blue-text"><i class="material-icons blue-text right">settings</i>Manage Sub Admins</a></li>
+    <li><a href="/admin/welcome" class="col s12 blue-text"><i class="material-icons blue-text right">group</i>View Members</a>
+    </li>
+  </ul>
+  <div class="fixed-action-btn">
+    <a href="#" class="btn-floating btn-large blue darken-3 waves-effect"><i class="material-icons">account_circle</i></a>
+    <ul>
+      <li><a href="/admin/manage/admin" class="btn-floating tooltipped btn-large blue darken-3 waves-effect" data-position="left" data-tooltip="Manage Account"><i class="material-icons large">settings</i></a></li>
+      <li><a href="/admin/logout" class="btn-floating tooltipped btn-large blue darken-3 waves-effect" data-position="left" data-tooltip="Logout"><i class="material-icons large">lock_outline</i></a></li>
+    </ul>
+  </div>
+{{/if}}
+
+{{#if subAdmin}}
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper blue darken-3 accent-3 fixed">
+        <a href="/subadmin/welcome" class="brand-logo center"><i class="material-icons">contacts</i>Ghamsu</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse hide-on-large"><i class="material-icons left">menu</i></a>
+        <a href="#" data-activates="slide-out" class="button-collapse show-on-large hide-on-med-and-down"><i class="material-icons left">menu</i></a>        
+      </div>
+    </nav>
+  </div>
+  <ul id="mobile-demo" class="side-nav">
+    <li class="logo3"><img src="/img/ghamsu.jpg" class="center logo2" alt=""></li>
+    <li><a href="/subadmin/add/new/member" class="col s12 blue-text"><i class="material-icons blue-text right">person_add</i>Add New Member</a></li>
+    <li><a href="/subadmin/welcome" class="col s12 blue-text"><i class="material-icons blue-text right">settings</i>Manage Members</a></li>
+  </ul>
+  <ul id="slide-out" class="side-nav">
+    <li class="logo3"><img src="/img/ghamsu.jpg" class="center logo2" alt=""></li>
+    <li><a href="/subadmin/add/new/member" class="col s12 blue-text"><i class="material-icons blue-text right">person_add</i>Add New Member</a></li>
+    <li><a href="/subadmin/welcome" class="col s12 blue-text"><i class="material-icons blue-text right">settings</i>Manage Members</a></li>
+  </ul>
+  <div class="fixed-action-btn">
+    <a href="#" class="btn-floating btn-large blue darken-3 waves-effect"><i class="material-icons">account_circle</i></a>
+    <ul>
+      <li><a href="/subadmin/manage/" class="btn-floating tooltipped btn-large blue darken-3 waves-effect" data-position="left" data-tooltip="Manage Account"><i class="material-icons large">settings</i></a></li>
+      <li><a href="/subadmin/logout" class="btn-floating tooltipped btn-large blue darken-3 waves-effect" data-position="left" data-tooltip="Logout"><i class="material-icons large">lock_outline</i></a></li>
+    </ul>
+  </div>
+{{/if}}
+
+{{#unless noUser}}
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper blue darken-3 accent-3">
+        <a href="#" class="brand-logo center"><i class="material-icons">contacts</i>Ghamsu
+        </a>
+      </div>
+    </nav>
+  </div>
+{{/unless}}

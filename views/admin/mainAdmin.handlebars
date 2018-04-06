@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title"><i class="material-icons">edit</i>Update Details</span>
+        <form action="/admin/manage/admin?_method=PUT" method="POST">
+        
+        <div class="input-field">
+          <i class="material-icons prefix">person</i>
+          <input type="text" name="username" id="username3" value="{{username}}" required>
+          <label id="username4" for="username">Username</label>
+        </div>
+        <div class="input-field">
+          <i class="material-icons prefix">lock_outline</i>
+          <input type="password" name="oldPassword" id="oldPassword3" value="{{oldPassword}}" required>
+          <label id="oldPassword4" for="oldPassword">Old Password</label>
+        </div>
+        <div class="input-field">
+          <i class="material-icons prefix">lock_outline</i>
+          <input type="password" name="newPassword" id="newPassword3" value="{{newPassword}}" required>
+          <label id="newPassword4" for="newPassword">New Password</label>
+        </div>
+      </div>
+      <div class="card-action">
+        <button type="submit" class="btn green darken-2 waves-effect">Update</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
