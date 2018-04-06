@@ -255,12 +255,11 @@ $(document).ready(function(){
   $(".button-collapse").sideNav();
   $(".modal").modal();
   $("select").material_select();
+  $("#membersTable").DataTable();
+  $("#subAdminsTable").DataTable();
   
   $("#institutionName").on("focus", () => {
     $("#institutionName").css("border-bottom", "1px solid blue");
     $("#institutionLabel").css("color", "#9e9e9e");
-  });
-  $("#institutionName").on("blur", () => {
-    $("#institutionName").css("border-bottom", "1px solid #9e9e9e");
   });
 });
