@@ -389,6 +389,42 @@ router.put("/update/sub_admin/:id", (req, res) => {
                   });
                 });
               }
+
+              bcrypt.genSalt(10, (err, salt) => {
+                if(err){
+                  req.flash("error_msg", "Unable To Update Login Credentials");
+                  return res.redirect("/subadmin/manage");
+                }
+
+                bcrypt.hash(subAdminDetails.newPassword, salt, (err, hash) => {
+                  if(err){
+                    req.flash("error_msg", "Unable To Update Login Credentials");
+                    return res.redirect("/subadmin/manage");
+                  }
+
+                  subAdminDetails.newPassword = hash;
+                  SubAdmin.findByIdAndUpdate(subAdminDetails._id, {
+                    $set: {
+                      username: subAdminDetails.username,
+                      mobileNumber: "+233"+subAdminDetails.mobileNumber.substring(1, 10),
+                      password: subAdminDetails.newPassword
+                    }
+                  }, {new: true}).then((subAdmin) => {
+                    if(subAdmin){
+                      req.flash("success_msg", "Update Successfully, Login With Your New Credentials");
+                      req.logout();
+                      return res.redirect("/subadmin/");
+                    }
+                    req.flash("error_msg", "Unable To Update Login Credentials");
+                    return res.redirect("/subadmin/manage");
+                  })
+                  .catch((err) => {
+                    if(err){
+                      console.log("Unable To Fetch Updated SubAdmin Details", err);
+                    }
+                  });
+                });
+              });
             })
             .catch((err) => {
               if(err){
