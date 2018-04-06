@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 module.exports = {
   mongooseConnect: () => {
     if(process.env.NODE_ENV == "production"){
-      return mongoose.connect("").then((res) => {
+      return mongoose.connect(MONGODB_URI).then((res) => {
         if(res){
           console.log("Connected To Production MongoDB Database Server");
         }
