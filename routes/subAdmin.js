@@ -63,7 +63,7 @@ router.get("/update/member/:id", ensureSubAdminAuthentication, (req, res) => {
         return res.render("subAdmin/updateMember", {memberDetails});
       }
       req.flash("error_msg", "Unable To Fetch Member Details, Try Again");
-      res.render("subAdmin/updateMember");
+      res.render("subadmin/updateMember");
     })
     .catch((err) => {
       if(err){
