@@ -9,17 +9,17 @@ const {Members} = require("../models/Members");
 const {ensureSubAdminAuthentication} = require("../helper/auth");
 
 router.get("/", (req, res) => {
-  res.render("subadmin/login");
+  res.render("subAdmin/login");
 });
 
 router.get("/welcome", ensureSubAdminAuthentication, (req, res) => {
   Members.find({institution: res.locals.subAdmin.institution}).then((members) => {
     if(members){
-      return res.render("subadmin/members", {
+      return res.render("subAdmin/members", {
         members
       });
     }
-    res.render("subadmin/members");
+    res.render("subAdmin/members");
   })
   .catch((err) => {
     if(err){
@@ -29,7 +29,7 @@ router.get("/welcome", ensureSubAdminAuthentication, (req, res) => {
 });
 
 router.get("/add/new/member", ensureSubAdminAuthentication, (req, res) => {
-  res.render("subadmin/addMember");
+  res.render("subAdmin/addMember");
 });
 
 router.get("/member/:id", ensureSubAdminAuthentication, (req, res) => {
@@ -38,10 +38,10 @@ router.get("/member/:id", ensureSubAdminAuthentication, (req, res) => {
   if(ObjectID.isValid(memberId)){
     return Members.findById(memberId).then((memberDetails) => {
       if(memberDetails){
-        return res.render("subadmin/memberDetails", {memberDetails});
+        return res.render("subAdmin/memberDetails", {memberDetails});
       }
       req.flash("error_msg", "Member Does Not Exist");
-      res.render("subadmin/memberDetails");
+      res.render("subAdmin/memberDetails");
     })
     .catch((err) => {
       if(err){
@@ -59,11 +59,10 @@ router.get("/update/member/:id", ensureSubAdminAuthentication, (req, res) => {
   if(ObjectID.isValid(memberId)){
     return Members.findById(memberId).then((memberDetails) => {
       if(memberDetails){
-
         return res.render("subAdmin/updateMember", {memberDetails});
       }
       req.flash("error_msg", "Unable To Fetch Member Details, Try Again");
-      res.render("subadmin/updateMember");
+      res.render("subAdmin/updateMember");
     })
     .catch((err) => {
       if(err){
@@ -72,12 +71,12 @@ router.get("/update/member/:id", ensureSubAdminAuthentication, (req, res) => {
     });    
   }
   req.flash("error_msg", "Invalid Member ID Provided");
-  res.redirect("/subadmin/welcome");  
+  res.redirect("/subAdmin/welcome");  
 });
 
 router.get("/manage", ensureSubAdminAuthentication, (req, res) => {
   var subAdminId = res.locals.subAdmin._id;
-  res.render("subadmin/updateLoginDetails", {subAdminId})
+  res.render("subAdmin/updateLoginDetails", {subAdminId})
 });
 
 router.get("/logout", ensureSubAdminAuthentication, (req, res) => {
@@ -191,7 +190,7 @@ router.post("/add/new/member", ensureSubAdminAuthentication, (req, res) => {
 
   }
   req.flash("error_msg", "Invalid Mobile Number Provided");
-  res.render("subadmin/addmember", {
+  res.render("subAdmin/addmember", {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     programme: req.body.programme,
