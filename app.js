@@ -81,7 +81,7 @@ app.use("/subadmin", subAdmin);
 //404 Not Found
 app.use((req, res, next) => {
   res.status(404).render("notFound");
-})
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

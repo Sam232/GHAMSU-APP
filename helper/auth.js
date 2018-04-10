@@ -11,7 +11,7 @@ module.exports = {
     }
     if(res.locals.mainAdmin === false){
       req.flash("error_msg", "Not Authorised");
-      return res.redirect("/admin/"); 
+      return res.redirect("/subadmin/welcome"); 
     }
     Admin.findById(res.locals.mainAdmin._id || null).then((mainAdmin) => {
       if(mainAdmin){
@@ -33,7 +33,7 @@ module.exports = {
     }
     if(res.locals.subAdmin === false){
       req.flash("error_msg", "Not Authorised");
-      return res.redirect("/subadmin/");
+      return res.redirect("/admin/welcome");
     }
     SubAdmin.findById(res.locals.subAdmin._id || null).then((subAdmin) => {
       if(subAdmin){
@@ -46,6 +46,6 @@ module.exports = {
       if(err){
         console.log("Unable To Fetch SubAdmin\'s Details");
       }
-    });  
+    });
   }
 }
