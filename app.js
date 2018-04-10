@@ -58,11 +58,13 @@ app.use((req, res, next) => {
   if(req.user){
     if(req.user.role === "mainAdmin"){
       res.locals.mainAdmin = req.user;
+      res.locals.subAdmin = false;
       res.locals.noUser = true;
       return next();
     }
     if(req.user.role === "SubAdmin"){
-      res.locals.subAdmin = req.user
+      res.locals.subAdmin = req.user;
+      res.locals.mainAdmin = false;
       res.locals.noUser = true;
       return next();
     }
@@ -75,6 +77,12 @@ app.use((req, res, next) => {
 //Express Router
 app.use("/admin", admin);
 app.use("/subadmin", subAdmin);
+
+//404 Not Found
+app.use((req, res, next) => {
+  res.status(404).render("notFound");
+  next();
+})
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
