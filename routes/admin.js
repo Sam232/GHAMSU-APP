@@ -79,7 +79,8 @@ router.get("/member/:id", ensureAdminAuthentication, (req, res) => {
     return Members.findById(memberId).then((memberDetails) => {
       if(memberDetails){
         return res.render("admin/memberDetails", {
-          memberDetails
+          memberDetails,
+          imagePath: "/img/user-images/members-image/"+memberDetails.imagePath
         });
       }
       req.flash("error_msg", "Member Does Not Exist");

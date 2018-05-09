@@ -7,15 +7,24 @@
         </span>       
         <form action="/admin/update/sub_admin?_method=PUT" method="POST">
           <div class="input-field">
-            <i class="material-icons prefix active">person</i>
-            <input type="text" id="userName01" name="userName" value="" required>
+            <i class="material-icons prefix">person</i>
+            <input type="text" id="userName01" name="userName" value="{{username}}" required>
             <label id="userName02" for="userName">Username</label>
           </div>
           <div class="input-field">
-            <i class="material-icons prefix active">phone</i>
-            <input type="text" id="phone01" name="phone" value="" required>
+            <i class="material-icons prefix">phone</i>
+            <input type="text" id="phone01" name="phone" value="{{phoneNumber}}" required>
             <label id="phone02" for="phone">Mobile Number</label>
-          </div> 
+          </div>
+          {{!-- <div class="file-field input-field">
+            <div class="btn black">
+              <span>File</span>
+              <input type="file" name="subAdminImage">
+            </div>
+            <div class="file-path-wrapper">
+              <input type="text" class="file-path" placeholder="Upload An Image of The SubAdmin">
+            </div>
+          </div>  --}}
           <input type="hidden" name="subAdminId" value="{{subAdminId}}">         
       </div>
       <div class="card-action">

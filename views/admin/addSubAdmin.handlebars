@@ -7,18 +7,27 @@
           <div class="input-field">
             <i class="material-icons prefix">person</i>
             <label for="username" id="addLabel1">Username</label>
-            <input type="text" name="username" class="validate" id="addForm1" required>
+            <input type="text" name="username" class="validate" id="addForm1" value="{{username}}" required>
           </div>
           <div class="input-field">
             <i class="material-icons prefix">school</i>
             <label for="institution" id="addLabel2">Institution</label>
-            <input type="text" name="institution" class="validate" id="addForm2" required>
+            <input type="text" name="institution" class="validate" value="{{institution}}" id="addForm2" required>
           </div>
           <div class="input-field">
             <i class="material-icons prefix">phone</i>
             <label for="phoneNumber" id="addLabel3">Mobile Number</label>
-            <input type="number" name="phoneNumber" class="validate" id="addForm3" required>
+            <input type="number" name="phoneNumber" class="validate" value="{{phoneNumber}}" id="addForm3" required>
           </div>
+          {{!-- <div class="file-field input-field">
+            <div class="btn black">
+              <span>File</span>
+              <input type="file" name="subAdminImage" required>
+            </div>
+            <div class="file-path-wrapper">
+              <input type="text" class="file-path" placeholder="Upload An Image of The SubAdmin"> 
+            </div>
+          </div> --}}
           <div class="card-action">
               <button type="submit" class="btn blue darken-3 waves-effect">Submit</button>
             </form>

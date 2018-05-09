@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-content">
         <span class="card-title"><i class="material-icons">person</i> New Member Details</span>
-        <form action="/subadmin/add/new/member" method="POST">
+        <form action="/subadmin/add/new/member" method="POST" enctype="multipart/form-data">
           <div class="input-field">
             <i class="material-icons prefix">person</i>
             <input type="text" name="firstName" id="mFirstName" value="{{firstName}}" required>
@@ -49,10 +49,23 @@
           </div>
           <div class="input-field">
             <i class="material-icons prefix">phone</i>
-            <input type="number" name="mobileNumber" id="mNumber" value="{{number}}" required>
+            <input type="number" name="mobileNumber" id="mNumber" value="{{mobileNumber}}" required>
             <label for="mobileNumber" id="mNumber1">Mobile Number</label>
           </div>
-        </div>       
+          <div class="input-field">
+            <i class="material-icons prefix">chrome_reader_mode</i>
+            <textarea name="portfolio" id="portfolio" class="materialize-textarea" required>{{portfolio}}</textarea>
+            <label for="portfolio" id="portfolio1">Portfolio</label>
+          </div>
+          <div class="file-field input-field">
+            <div class="btn black">
+              <span>File</span>
+              <input type="file" name="memberImage" required>
+            </div>
+            <div class="file-path-wrapper">
+              <input type="text" class="file-path" placeholder="Upload An Image of The Member">
+            </div>
+          </div>       
         <div class="card-action">
           <button type="submit" class="btn blue darken-3 waves-effect">Add Member</button>
           </form>

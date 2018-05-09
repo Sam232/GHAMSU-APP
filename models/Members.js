@@ -42,6 +42,14 @@ var MembersSchema = new Schema({
   mobileNumber: {
     type: String,
     required: true
+  },
+  portfolio: {
+    type: String,
+    required: true
+  },
+  imagePath: {
+    type: String,
+    required: true
   }
 });
 

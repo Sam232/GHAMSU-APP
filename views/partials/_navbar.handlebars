@@ -4,7 +4,10 @@
       <div class="nav-wrapper blue darken-3 accent-3 fixed">
         <a href="/admin/welcome" class="brand-logo center"><i class="material-icons">contacts</i>Ghamsu</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons left">menu</i></a>
-        <a href="#" data-activates="slide-out" class="button-collapse show-on-large hide-on-med-and-down"><i class="material-icons left">menu</i></a>        
+        <a href="#" data-activates="slide-out" class="button-collapse show-on-large hide-on-med-and-down"><i class="material-icons left">menu</i></a>    
+        <ul id="nav-mobile" class="right hide-on-small-only">
+          <li><a href="#"><i class="material-icons left">account_circle</i> Welcome, {{mainAdmin.username}}</a></li>
+        </ul>    
       </div>
     </nav>
   </div>
@@ -37,7 +40,10 @@
       <div class="nav-wrapper blue darken-3 accent-3 fixed">
         <a href="/subadmin/welcome" class="brand-logo center"><i class="material-icons">contacts</i>Ghamsu</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse hide-on-large"><i class="material-icons left">menu</i></a>
-        <a href="#" data-activates="slide-out" class="button-collapse show-on-large hide-on-med-and-down"><i class="material-icons left">menu</i></a>        
+        <a href="#" data-activates="slide-out" class="button-collapse show-on-large hide-on-med-and-down"><i class="material-icons left">menu</i></a> 
+        <ul id="nav-mobile" class="right hide-on-small-only">
+          <li><a href="#"><i class="material-icons left">account_circle</i> Welcome, {{subAdmin.username}}</a></li>
+        </ul>        
       </div>
     </nav>
   </div>

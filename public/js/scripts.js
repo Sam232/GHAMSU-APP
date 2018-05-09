@@ -218,6 +218,14 @@ $(document).ready(function(){
     $("#mNumber").css("border-bottom", "1px solid #9e9e9e");
   });
 
+  $("#portfolio").on("focus", () => {
+    $("#portfolio").css("border-bottom", "1px solid blue");
+    $("#portfolio1").css("color", "#9e9e9e");
+  });
+  $("#portfolio").on("blur", () => {
+    $("#portfolio").css("border-bottom", "1px solid #9e9e9e");
+  });
+
   //Update SubAdmin Login Details
   $("#userName01").on("focus", () => {
     $("#userName01").css("border-bottom", "1px solid blue");
