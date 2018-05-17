@@ -5,7 +5,7 @@
         <span class="card-title">
           <h5><i class="material-icons">edit</i>Update Details</h5> 
         </span>       
-        <form action="/admin/update/sub_admin?_method=PUT" method="POST">
+        <form action="/admin/update/sub_admin/{{subAdminId}}?_method=PUT" method="POST" enctype="multipart/form-data">
           <div class="input-field">
             <i class="material-icons prefix">person</i>
             <input type="text" id="userName01" name="userName" value="{{username}}" required>
@@ -16,7 +16,7 @@
             <input type="text" id="phone01" name="phone" value="{{phoneNumber}}" required>
             <label id="phone02" for="phone">Mobile Number</label>
           </div>
-          {{!-- <div class="file-field input-field">
+          <div class="file-field input-field">
             <div class="btn black">
               <span>File</span>
               <input type="file" name="subAdminImage">
@@ -24,8 +24,10 @@
             <div class="file-path-wrapper">
               <input type="text" class="file-path" placeholder="Upload An Image of The SubAdmin">
             </div>
-          </div>  --}}
-          <input type="hidden" name="subAdminId" value="{{subAdminId}}">         
+          </div>   
+          <div class="input-field">
+            <input type="hidden" name="subAdminImagePath" value="{{subAdminImage}}">
+          </div>  
       </div>
       <div class="card-action">
         <button type="submit" class="btn waves-effect blue darken-3">Update</button>

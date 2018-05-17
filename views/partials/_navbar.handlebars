@@ -6,7 +6,7 @@
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons left">menu</i></a>
         <a href="#" data-activates="slide-out" class="button-collapse show-on-large hide-on-med-and-down"><i class="material-icons left">menu</i></a>    
         <ul id="nav-mobile" class="right hide-on-small-only">
-          <li><a href="#"><i class="material-icons left">account_circle</i> Welcome, {{mainAdmin.username}}</a></li>
+          <li><a href="#">Welcome, {{mainAdmin.username}}</a></li>
         </ul>    
       </div>
     </nav>
@@ -26,7 +26,7 @@
     </li>
   </ul>
   <div class="fixed-action-btn">
-    <a href="#" class="btn-floating btn-large blue darken-3 waves-effect"><i class="material-icons">account_circle</i></a>
+    <a href="#" class="btn-floating btn-large blue darken-3 waves-effect"><img src="/img/user-images/mainAdmin-image/{{mainAdmin.imagePath}}" style="height: 56px"class="responsive-img" alt="mainAdminImage"></a>
     <ul>
       <li><a href="/admin/manage/admin" class="btn-floating tooltipped btn-large blue darken-3 waves-effect" data-position="left" data-tooltip="Manage Account"><i class="material-icons large">settings</i></a></li>
       <li><a href="/admin/logout" class="btn-floating tooltipped btn-large blue darken-3 waves-effect" data-position="left" data-tooltip="Logout"><i class="material-icons large">lock_outline</i></a></li>
@@ -40,10 +40,10 @@
       <div class="nav-wrapper blue darken-3 accent-3 fixed">
         <a href="/subadmin/welcome" class="brand-logo center"><i class="material-icons">contacts</i>Ghamsu</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse hide-on-large"><i class="material-icons left">menu</i></a>
-        <a href="#" data-activates="slide-out" class="button-collapse show-on-large hide-on-med-and-down"><i class="material-icons left">menu</i></a> 
+        <a href="#" data-activates="slide-out" class="button-collapse show-on-large hide-on-med-and-down"><i class="material-icons left">menu</i></a>   
         <ul id="nav-mobile" class="right hide-on-small-only">
-          <li><a href="#"><i class="material-icons left">account_circle</i> Welcome, {{subAdmin.username}}</a></li>
-        </ul>        
+          <li><a href="#">Welcome, {{subAdmin.username}}</a></li>
+        </ul>  
       </div>
     </nav>
   </div>
@@ -58,7 +58,7 @@
     <li><a href="/subadmin/welcome" class="col s12 blue-text"><i class="material-icons blue-text right">settings</i>Manage Members</a></li>
   </ul>
   <div class="fixed-action-btn">
-    <a href="#" class="btn-floating btn-large blue darken-3 waves-effect"><i class="material-icons">account_circle</i></a>
+    <a href="#" class="btn-floating btn-large blue darken-3 waves-effect"><img src="/img/user-images/subAdmins-image/{{subAdmin.imagePath}}" style="height: 56px"class="responsive-img" alt="subAdminImage"></a>
     <ul>
       <li><a href="/subadmin/manage/" class="btn-floating tooltipped btn-large blue darken-3 waves-effect" data-position="left" data-tooltip="Manage Account"><i class="material-icons large">settings</i></a></li>
       <li><a href="/subadmin/logout" class="btn-floating tooltipped btn-large blue darken-3 waves-effect" data-position="left" data-tooltip="Logout"><i class="material-icons large">lock_outline</i></a></li>

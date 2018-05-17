@@ -10,6 +10,10 @@ var AdminSchema = new Schema({
     type: String,
     required: true
   },
+  imagePath: {
+    type: String,
+    required: true
+  },
   role: {
     type: String,
     default: "mainAdmin"

@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-content">
         <span class="card-title"><i class="material-icons">edit</i>Update Details</span>
-        <form action="/admin/manage/admin?_method=PUT" method="POST">
+        <form action="/admin/manage/admin?_method=PUT" method="POST" enctype="multipart/form-data">
         
         <div class="input-field">
           <i class="material-icons prefix">person</i>
@@ -12,13 +12,22 @@
         </div>
         <div class="input-field">
           <i class="material-icons prefix">lock_outline</i>
-          <input type="password" name="oldPassword" id="oldPassword3" value="{{oldPassword}}" required>
+          <input type="password" name="oldPassword" id="oldPassword3" value="" required>
           <label id="oldPassword4" for="oldPassword">Old Password</label>
         </div>
         <div class="input-field">
           <i class="material-icons prefix">lock_outline</i>
-          <input type="password" name="newPassword" id="newPassword3" value="{{newPassword}}" required>
+          <input type="password" name="newPassword" id="newPassword3" value="" required>
           <label id="newPassword4" for="newPassword">New Password</label>
+        </div>
+        <div class="file-field input-field">
+          <div class="btn black">
+            <span>File</span>
+            <input type="file" name="mainAdminImage">
+          </div>
+          <div class="file-path-wrapper">
+            <input type="text" class="file-path" placeholder="Upload An Image Of Yourself">
+          </div>
         </div>
       </div>
       <div class="card-action">

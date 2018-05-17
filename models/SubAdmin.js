@@ -19,6 +19,10 @@ var SubAdminSchema = new Schema({
     type: String,
     required: true
   },
+  imagePath: {
+    type: String,
+    required: true
+  },
   members: {
     type: Number,
     required: false,

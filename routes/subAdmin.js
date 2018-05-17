@@ -5,6 +5,7 @@ const {ObjectID} = require("mongodb");
 const multer = require("multer"); 
 const fs = require("fs");
 const path = require("path");
+const {isObject} = require("util");
 
 const {SubAdmin} = require("../models/SubAdmin");
 const {Members} = require("../models/Members");
@@ -296,160 +297,563 @@ router.post("/add/new/member", ensureSubAdminAuthentication, (req, res) => {
 });
 
 router.put("/update/sub_admin/:id", (req, res) => {
-  var subAdminDetails = {
-    _id: req.params.id,
-    username: req.body.username,
-    mobileNumber: req.body.mobileNumber,
-    oldPassword: req.body.oldPassword,
-    newPassword: req.body.newPassword
-  };
+  var subAdminImage;
 
-  if(subAdminDetails.newPassword.length < 8 && subAdminDetails.oldPassword.length < 8){
-    req.flash("error_msg", "Passwords Must Be Greater Than 7");
-    return res.redirect("/subadmin/manage");
-  }
+  var upload = multer({
+    storage: multer.diskStorage({
+      destination: (req, file, callback) => {
+        callback(null, "./public/img/user-images/subAdmins-image");
+      },
+      filename: (req, file, callback) => {
+        subAdminImage = file.fieldname + "-" + Date.now() + path.extname(file.originalname);
+        callback(null, subAdminImage);
+      }
+    }), 
+    fileFilter: (req, file, callback) => {
+      var extname = path.extname(file.originalname);
+      if(extname === ".jpg" || extname === ".png" || extname === ".jpeg"){
+        return callback(null, true);
+      }
+      callback(new Error("A Valid File With The Extension(.jpg, or .jpeg or .png) Should Be Uploaded"));
+   }
+  }).single("subAdminImage");
 
-  if(subAdminDetails.oldPassword.length < 8){
-    req.flash("error_msg", "old Password Must Be Greater Than 7");
-    return res.redirect("/subadmin/manage");
-  }
+  upload(req, res, (err) => {
+    var subAdminDetails = {
+      _id: req.params.id,
+      username: req.body.username,
+      mobileNumber: req.body.mobileNumber,
+      oldPassword: req.body.oldPassword,
+      newPassword: req.body.newPassword
+    };
 
-  if(subAdminDetails.newPassword.length < 8){
-    req.flash("error_msg", "New Password Must Be Greater Than 7");
-    return res.redirect("/subadmin/manage");
-  }
+    if(err){      
+      req.flash("error_msg", "A Valid File With The Extension(.jpg, or .jpeg or .png) Should Be Uploaded");
+      return res.render("subAdmin/updateLoginDetails", {
+        username: subAdminDetails.username,
+        mobileNumber: subAdminDetails.mobileNumber,
+        subAdminId: subAdminDetails._id
+      });
+    }
+  
+    if(subAdminDetails.newPassword.length < 8 && subAdminDetails.oldPassword.length < 8){
+      if(isObject(req.file)){
+        fs.unlink("./public/img/user-images/subAdmins-image/"+subAdminImage, (err) => {
+          if(err){
+            console.log("Unable To Delete SubAdmin\'s Image", err);
+            req.flash("error_msg", "Passwords Must Be Greater Than 7");
+            return res.render("subAdmin/updateLoginDetails", {
+              username: subAdminDetails.username,
+              mobileNumber: subAdminDetails.mobileNumber,
+              subAdminId: subAdminDetails._id
+            });
+          }
+          req.flash("error_msg", "Passwords Must Be Greater Than 7");
+          res.render("subAdmin/updateLoginDetails", {
+            username: subAdminDetails.username,
+            mobileNumber: subAdminDetails.mobileNumber,
+            subAdminId: subAdminDetails._id
+          });
+        });
+      }
+      else{
+        req.flash("error_msg", "Passwords Must Be Greater Than 7");
+        res.render("subAdmin/updateLoginDetails", {
+          username: subAdminDetails.username,
+          mobileNumber: subAdminDetails.mobileNumber,
+          subAdminId: subAdminDetails._id
+        });
+      }
+    }
+  
+    if(subAdminDetails.oldPassword.length < 8){
+      if(isObject(req.file)){
+        fs.unlink("./public/img/user-images/subAdmins-image/"+subAdminImage, (err) => {
+          if(err){
+            console.log("Unable To Delete SubAdmin\'s Image", err);
+            req.flash("error_msg", "Old Password Must Be Greater Than 7");
+            return res.render("subAdmin/updateLoginDetails", {
+              username: subAdminDetails.username,
+              mobileNumber: subAdminDetails.mobileNumber,
+              subAdminId: subAdminDetails._id
+            });
+          }
+          req.flash("error_msg", "Old Password Must Be Greater Than 7");
+          res.render("subAdmin/updateLoginDetails", {
+            username: subAdminDetails.username,
+            mobileNumber: subAdminDetails.mobileNumber,
+            subAdminId: subAdminDetails._id
+          });
+        });
+      }
+      else{
+        req.flash("error_msg", "Old Password Must Be Greater Than 7");
+        res.render("subAdmin/updateLoginDetails", {
+          username: subAdminDetails.username,
+          mobileNumber: subAdminDetails.mobileNumber,
+          subAdminId: subAdminDetails._id
+        });
+      }      
+    }
+  
+    if(subAdminDetails.newPassword.length < 8){
+      if(isObject(req.file)){
+        fs.unlink("./public/img/user-images/subAdmins-image/"+subAdminImage, (err) => {
+          if(err){
+            console.log("Unable To Delete SubAdmin\'s Image", err);
+            req.flash("error_msg", "New Password Must Be Greater Than 7");
+            return res.render("subAdmin/updateLoginDetails", {
+              username: subAdminDetails.username,
+              mobileNumber: subAdminDetails.mobileNumber,
+              subAdminId: subAdminDetails._id
+            });
+          }
+          req.flash("error_msg", "New Password Must Be Greater Than 7");
+          res.render("subAdmin/updateLoginDetails", {
+            username: subAdminDetails.username,
+            mobileNumber: subAdminDetails.mobileNumber,
+            subAdminId: subAdminDetails._id
+          });
+        });
+      }
+      else{
+        req.flash("error_msg", "New Password Must Be Greater Than 7");
+        res.render("subAdmin/updateLoginDetails", {
+          username: subAdminDetails.username,
+          mobileNumber: subAdminDetails.mobileNumber,
+          subAdminId: subAdminDetails._id
+        });
+      }
+    }
+  
+    if(subAdminDetails.newPassword === subAdminDetails.oldPassword){
+      if(isObject(req.file)){
+        fs.unlink("./public/img/user-images/subAdmins-image/"+subAdminImage, (err) => {
+          if(err){
+            console.log("Unable To Delete SubAdmin\'s Image", err);
+            req.flash("error_msg", "Passwords Must Not Match");
+            return res.render("subAdmin/updateLoginDetails", {
+              username: subAdminDetails.username,
+              mobileNumber: subAdminDetails.mobileNumber,
+              subAdminId: subAdminDetails._id
+            });
+          }
+          req.flash("error_msg", "Passwords Must Not Match");
+          res.render("subAdmin/updateLoginDetails", {
+            username: subAdminDetails.username,
+            mobileNumber: subAdminDetails.mobileNumber,
+            subAdminId: subAdminDetails._id
+          });
+        });
+      }
+      else{
+        req.flash("error_msg", "Passwords Must Not Match");
+        res.render("subAdmin/updateLoginDetails", {
+          username: subAdminDetails.username,
+          mobileNumber: subAdminDetails.mobileNumber,
+          subAdminId: subAdminDetails._id
+        });
+      } 
+    }
+  
+    if(subAdminDetails.mobileNumber.length != 10 || req.body.mobileNumber.substring(0, 1) != "0"){
+      if(isObject(req.file)){
+        fs.unlink("./public/img/user-images/subAdmins-image/"+subAdminImage, (err) => {
+          if(err){
+            console.log("Unable To Delete SubAdmin\'s Image", err);
+            req.flash("error_msg", "Invalid Mobile Number Provided");
+            return res.render("subAdmin/updateLoginDetails", {
+              username: subAdminDetails.username,
+              mobileNumber: subAdminDetails.mobileNumber,
+              subAdminId: subAdminDetails._id
+            });
+          }
+          req.flash("error_msg", "Invalid Mobile Number Provided");
+          res.render("subAdmin/updateLoginDetails", {
+            username: subAdminDetails.username,
+            mobileNumber: subAdminDetails.mobileNumber,
+            subAdminId: subAdminDetails._id
+          });
+        });
+      }
+      else{
+        req.flash("error_msg", "Invalid Mobile Number Provided");
+        res.render("subAdmin/updateLoginDetails", {
+          username: subAdminDetails.username,
+          mobileNumber: subAdminDetails.mobileNumber,
+          subAdminId: subAdminDetails._id
+        });
+      }
+    }
 
-  if(subAdminDetails.newPassword === subAdminDetails.oldPassword){
-    req.flash("error_msg", "Passwords Must Not Match");
-    return res.redirect("/subadmin/manage");
-  }
-
-  if(subAdminDetails.mobileNumber.length != 10 || req.body.mobileNumber.substring(0, 1) != "0"){
-    req.flash("error_msg", "Invalid Mobile Number Provided");
-    return res.redirect("/subadmin/manage");
-  }
-
-  if(ObjectID.isValid(subAdminDetails._id)){
-    return SubAdmin.findById(subAdminDetails._id).then((subAdmin) => {
-      if(subAdmin){
-        return bcrypt.compare(subAdminDetails.oldPassword, subAdmin.password).then((response) => {
-          if(response){
-            return SubAdmin.find({
-              _id: {$ne: subAdmin._id}
-            }).then((subAdmins) => {
-              if(subAdmins.length > 0){
-                return subAdmins.forEach((subAdmin, index) => {
-                  if(subAdmin.username === subAdminDetails.username){
-                    req.flash("error_msg", "Username Already Exist");
-                    return res.redirect("/subadmin/manage");
-                  }
-
-                  if(subAdmin.mobileNumber === "+233"+subAdminDetails.mobileNumber.substring(1, 10)){
-                    req.flash("error_msg", "Mobile Number Already Exist");
-                    return res.redirect("/subadmin/manage");
-                  }
-
-                  bcrypt.genSalt(10, (err, salt) => {
-                    if(err){
-                      req.flash("error_msg", "Unable To Update Login Credentials");
-                      return res.redirect("/subadmin/manage");
-                    }
-
-                    bcrypt.hash(subAdminDetails.newPassword, salt, (err, hash) => {
+    var subAdmin = res.locals.subAdmin;
+    if(subAdmin){
+      return bcrypt.compare(subAdminDetails.oldPassword, subAdmin.password).then((response) => {
+        if(response){
+          return SubAdmin.find({"_id": {$ne: subAdmin._id}}).then((subAdmins) => {
+            if(subAdmins.length > 0){
+              var newSubAdmins = subAdmins.filter(subAdmin => subAdmin.username === subAdminDetails.username ||subAdmin.mobileNumber === "+233"+subAdminDetails.mobileNumber.substring(0, 1));
+              
+              if(newSubAdmins.length === 0){
+                if(isObject(req.file) === false){
+                    return bcrypt.genSalt(10, (err, salt) => {
                       if(err){
                         req.flash("error_msg", "Unable To Update Login Credentials");
-                        return res.redirect("/subadmin/manage");
-                      }
-
-                      subAdminDetails.newPassword = hash;
-                      SubAdmin.findByIdAndUpdate(subAdminDetails._id, {
-                        $set: {
+                        return res.render("subAdmin/updateLoginDetails", {
                           username: subAdminDetails.username,
-                          mobileNumber: "+233"+subAdminDetails.mobileNumber.substring(1, 10),
-                          password: subAdminDetails.newPassword
-                        }
-                      }, {new: true}).then((subAdmin) => {
-                        if(subAdmin){
-                          req.flash("success_msg", "Update Successfully, Login With Your New Credentials");
-                          req.logout();
-                          return res.redirect("/subadmin/");
-                        }
-                        req.flash("error_msg", "Unable To Update Login Credentials");
-                        return res.redirect("/subadmin/manage");
-                      })
-                      .catch((err) => {
+                          mobileNumber: subAdminDetails.mobileNumber,
+                          subAdminId: subAdminDetails._id
+                        });
+                      }
+    
+                      bcrypt.hash(subAdminDetails.newPassword, salt, (err, hash) => {
                         if(err){
-                          console.log("Unable To Fetch Updated SubAdmin Details", err);
+                          req.flash("error_msg", "Unable To Update Login Credentials");
+                          return res.render("subAdmin/updateLoginDetails", {
+                            username: subAdminDetails.username,
+                            mobileNumber: subAdminDetails.mobileNumber,
+                            subAdminId: subAdminDetails._id
+                          });
                         }
+  
+                        subAdminDetails.newPassword = hash;
+                        SubAdmin.findByIdAndUpdate(subAdminDetails._id, {
+                          $set: {
+                            username: subAdminDetails.username,
+                            mobileNumber: "+233"+subAdminDetails.mobileNumber.substring(1, 10),
+                            password: subAdminDetails.newPassword
+                          }
+                        }, {new: true}).then((subAdmin) => {
+                          if(subAdmin){
+                            req.flash("success_msg", "Update Successfully, Login With Your New Credentials");
+                            req.logout();
+                            return res.redirect("/subadmin/");
+                          }
+                        })
+                        .catch((err) => {
+                          if(err){
+                            console.log("Unable To Fetch Updated SubAdmin Details", err);
+                          }
+                        });
                       });
+                    });
+                  }
+
+                  fs.unlink("./public/img/user-images/subAdmins-image/"+subAdmin.imagePath, (err) => {
+                    return bcrypt.genSalt(10, (err, salt) => {
+                      if(err){
+                        return fs.unlink("./public/img/user-images/subAdmins-image/"+subAdminImage, (err) => {
+                          if(err){
+                            console.log("Unable To Delete SubAdmin\'s Image", err);
+                            req.flash("error_msg", "Unable To Update Login Credentials");
+                            return res.render("subAdmin/updateLoginDetails", {
+                              username: subAdminDetails.username,
+                              mobileNumber: subAdminDetails.mobileNumber,
+                              subAdminId: subAdminDetails._id
+                            });
+                          }
+                          req.flash("error_msg", "Unable To Update Login Credentials");
+                          res.render("subAdmin/updateLoginDetails", {
+                            username: subAdminDetails.username,
+                            mobileNumber: subAdminDetails.mobileNumber,
+                            subAdminId: subAdminDetails._id
+                          });
+                        });
+                      }
+  
+                      bcrypt.hash(subAdminDetails.newPassword, salt, (err, hash) => {
+                        if(err){
+                          return fs.unlink("./public/img/user-images/subAdmins-image/"+subAdminImage, (err) => {
+                            if(err){
+                              console.log("Unable To Delete SubAdmin\'s Image", err);
+                              req.flash("error_msg", "Unable To Update Login Credentials");
+                              return res.render("subAdmin/updateLoginDetails", {
+                                username: subAdminDetails.username,
+                                mobileNumber: subAdminDetails.mobileNumber,
+                                subAdminId: subAdminDetails._id
+                              });
+                            }
+                            req.flash("error_msg", "Unable To Update Login Credentials");
+                            res.render("subAdmin/updateLoginDetails", {
+                              username: subAdminDetails.username,
+                              mobileNumber: subAdminDetails.mobileNumber,
+                              subAdminId: subAdminDetails._id
+                            });
+                          });
+                        }
+  
+                        subAdminDetails.newPassword = hash;
+                        subAdminDetails.subAdminImage = subAdminImage;
+                        SubAdmin.findByIdAndUpdate(subAdminDetails._id, {
+                          $set: {
+                            username: subAdminDetails.username,
+                            mobileNumber: "+233"+subAdminDetails.mobileNumber.substring(1, 10),
+                            password: subAdminDetails.newPassword,
+                            imagePath: subAdminDetails.subAdminImage
+                          }
+                        }, {new: true}).then((subAdmin) => {
+                          if(subAdmin){
+                            req.flash("success_msg", "Update Successfully, Login With Your New Credentials");
+                            req.logout();
+                            return res.redirect("/subadmin/");
+                          }
+                          fs.unlink("./public/img/user-images/subAdmins-image/"+subAdminImage, (err) => {
+                            if(err){
+                              console.log("Unable To Delete SubAdmin\'s Image", err);
+                              req.flash("error_msg", "Unable To Update Login Credentials");
+                              return res.render("subAdmin/updateLoginDetails", {
+                                username: subAdminDetails.username,
+                                mobileNumber: subAdminDetails.mobileNumber,
+                                subAdminId: subAdminDetails._id
+                              });
+                            }
+                            req.flash("error_msg", "Unable To Update Login Credentials");
+                            res.render("subAdmin/updateLoginDetails", {
+                              username: subAdminDetails.username,
+                              mobileNumber: subAdminDetails.mobileNumber,
+                              subAdminId: subAdminDetails._id
+                            });
+                          });
+                        })
+                        .catch((err) => {
+                          if(err){
+                            console.log("Unable To Fetch Updated SubAdmin Details", err);
+                          }
+                        });
+                      });
+                    });
+                  });
+              }  
+              else{
+                if(isObject(req.file)){
+                  return fs.unlink("./public/img/user-images/subAdmins-image/"+subAdminImage, (err) => {
+                    if(err){
+                      console.log("Provided Detail(s) Already Exist", err);
+                      req.flash("error_msg", "Provided Detail(s) Already Exist");
+                      return res.render("subAdmin/updateLoginDetails", {
+                        username: subAdminDetails.username,
+                        mobileNumber: subAdminDetails.mobileNumber,
+                        subAdminId: subAdminDetails._id
+                      });
+                    }
+                    req.flash("error_msg", "Provided Detail(s) Already Exist");
+                    res.render("subAdmin/updateLoginDetails", {
+                      username: subAdminDetails.username,
+                      mobileNumber: subAdminDetails.mobileNumber,
+                      subAdminId: subAdminDetails._id
+                    });
+                  });
+                }
+                req.flash("error_msg", "Provided Detail(s) Already Exist");
+                res.render("subAdmin/updateLoginDetails", {
+                  username: subAdminDetails.username,
+                  mobileNumber: subAdminDetails.mobileNumber,
+                  subAdminId: subAdminDetails._id
+                });
+              }                       
+            }
+
+            else{
+              if(isObject(req.file) === false){
+                return bcrypt.genSalt(10, (err, salt) => {
+                  if(err){
+                    req.flash("error_msg", "Unable To Update Login Credentials");
+                    return res.render("subAdmin/updateLoginDetails", {
+                      username: subAdminDetails.username,
+                      mobileNumber: subAdminDetails.mobileNumber,
+                      subAdminId: subAdminDetails._id
+                    });
+                  }
+  
+                  bcrypt.hash(subAdminDetails.newPassword, salt, (err, hash) => {
+                    if(err){
+                      req.flash("error_msg", "Unable To Update Login Credentials");
+                      return res.render("subAdmin/updateLoginDetails", {
+                        username: subAdminDetails.username,
+                        mobileNumber: subAdminDetails.mobileNumber,
+                        subAdminId: subAdminDetails._id
+                      });
+                    }
+  
+                    subAdminDetails.newPassword = hash;
+                    SubAdmin.findByIdAndUpdate(subAdminDetails._id, {
+                      $set: {
+                        username: subAdminDetails.username,
+                        mobileNumber: "+233"+subAdminDetails.mobileNumber.substring(1, 10),
+                        password: subAdminDetails.newPassword
+                      }
+                    }, {new: true}).then((subAdmin) => {
+                      if(subAdmin){
+                        req.flash("success_msg", "Update Successfully, Login With Your New Credentials");
+                        req.logout();
+                        return res.redirect("/subadmin/");
+                      }
+                      req.flash("error_msg", "Unable To Update Login Credentials");
+                      res.render("subAdmin/updateLoginDetails", {
+                        username: subAdminDetails.username,
+                        mobileNumber: subAdminDetails.mobileNumber,
+                        subAdminId: subAdminDetails._id
+                      });
+                    })
+                    .catch((err) => {
+                      if(err){
+                        console.log("Unable To Fetch Updated SubAdmin Details", err);
+                      }
                     });
                   });
                 });
               }
 
-              bcrypt.genSalt(10, (err, salt) => {
-                if(err){
-                  req.flash("error_msg", "Unable To Update Login Credentials");
-                  return res.redirect("/subadmin/manage");
-                }
-
-                bcrypt.hash(subAdminDetails.newPassword, salt, (err, hash) => {
+              fs.unlink("./public/img/user-images/subAdmins-image/"+subAdmin.imagePath, (err) => {
+                return bcrypt.genSalt(10, (err, salt) => {
                   if(err){
-                    req.flash("error_msg", "Unable To Update Login Credentials");
-                    return res.redirect("/subadmin/manage");
+                    return fs.unlink("./public/img/user-images/subAdmins-image/"+subAdminImage, (err) => {
+                      if(err){
+                        console.log("Unable To Update Login Credentials", err);
+                        req.flash("error_msg", "Unable To Update Login Credentials");
+                        return res.render("subAdmin/updateLoginDetails", {
+                          username: subAdminDetails.username,
+                          mobileNumber: subAdminDetails.mobileNumber,
+                          subAdminId: subAdminDetails._id
+                        });
+                      }
+                      req.flash("error_msg", "Unable To Update Login Credentials");
+                      res.render("subAdmin/updateLoginDetails", {
+                        username: subAdminDetails.username,
+                        mobileNumber: subAdminDetails.mobileNumber,
+                        subAdminId: subAdminDetails._id
+                      });
+                    });
                   }
-
-                  subAdminDetails.newPassword = hash;
-                  SubAdmin.findByIdAndUpdate(subAdminDetails._id, {
-                    $set: {
-                      username: subAdminDetails.username,
-                      mobileNumber: "+233"+subAdminDetails.mobileNumber.substring(1, 10),
-                      password: subAdminDetails.newPassword
-                    }
-                  }, {new: true}).then((subAdmin) => {
-                    if(subAdmin){
-                      req.flash("success_msg", "Update Successfully, Login With Your New Credentials");
-                      req.logout();
-                      return res.redirect("/subadmin/");
-                    }
-                    req.flash("error_msg", "Unable To Update Login Credentials");
-                    return res.redirect("/subadmin/manage");
-                  })
-                  .catch((err) => {
+  
+                  bcrypt.hash(subAdminDetails.newPassword, salt, (err, hash) => {
                     if(err){
-                      console.log("Unable To Fetch Updated SubAdmin Details", err);
+                      return fs.unlink("./public/img/user-images/subAdmins-image/"+subAdminImage, (err) => {
+                        if(err){
+                          console.log("Unable To Update Login Credentials", err);
+                          req.flash("error_msg", "Unable To Update Login Credentials");
+                          return res.render("subAdmin/updateLoginDetails", {
+                            username: subAdminDetails.username,
+                            mobileNumber: subAdminDetails.mobileNumber,
+                            subAdminId: subAdminDetails._id
+                          });
+                        }
+                        req.flash("error_msg", "Unable To Update Login Credentials");
+                        res.render("subAdmin/updateLoginDetails", {
+                          username: subAdminDetails.username,
+                          mobileNumber: subAdminDetails.mobileNumber,
+                          subAdminId: subAdminDetails._id
+                        });
+                      });
                     }
+  
+                    subAdminDetails.newPassword = hash;
+                    subAdminDetails.subAdminImage = subAdminImage;
+                    SubAdmin.findByIdAndUpdate(subAdminDetails._id, {
+                      $set: {
+                        username: subAdminDetails.username,
+                        mobileNumber: "+233"+subAdminDetails.mobileNumber.substring(1, 10),
+                        password: subAdminDetails.newPassword,
+                        imagePath: subAdminDetails.subAdminImage
+                      }
+                    }, {new: true}).then((subAdmin) => {
+                      if(subAdmin){
+                        req.flash("success_msg", "Update Successfully, Login With Your New Credentials");
+                        req.logout();
+                        return res.redirect("/subadmin/");
+                      }
+                      fs.unlink("./public/img/user-images/subAdmins-image/"+subAdminImage, (err) => {
+                        if(err){
+                          console.log("Unable To Update Login Credentials", err);
+                          req.flash("error_msg", "Unable To Update Login Credentials");
+                          return res.render("subAdmin/updateLoginDetails", {
+                            username: subAdminDetails.username,
+                            mobileNumber: subAdminDetails.mobileNumber,
+                            subAdminId: subAdminDetails._id
+                          });
+                        }
+                        req.flash("error_msg", "Unable To Update Login Credentials");
+                        res.render("subAdmin/updateLoginDetails", {
+                          username: subAdminDetails.username,
+                          mobileNumber: subAdminDetails.mobileNumber,
+                          subAdminId: subAdminDetails._id
+                        });
+                      });
+                    })
+                    .catch((err) => {
+                      if(err){
+                        console.log("Unable To Fetch Updated SubAdmin Details", err);
+                      }
+                    });
                   });
                 });
               });
-            })
-            .catch((err) => {
-              if(err){
-                console.log("Unable To Fetch SubAdmins", err);
-              }
+            }
+          })
+          .catch((err) => {
+            if(err){
+              console.log("Unable To Fetch SubAdmins", err);
+            }
+          });
+        }
+        if(isObject(req.file)){
+          return fs.unlink("./public/img/user-images/subAdmins-image/"+subAdminImage, (err) => {
+            if(err){
+              console.log("Old Password is Incorrect", err);
+              req.flash("error_msg", "Old Password is Incorrect");
+              return res.render("subAdmin/updateLoginDetails", {
+                username: subAdminDetails.username,
+                mobileNumber: subAdminDetails.mobileNumber,
+                subAdminId: subAdminDetails._id
+              });
+            }
+            req.flash("error_msg", "Old Password is Incorrect");
+            res.render("subAdmin/updateLoginDetails", {
+              username: subAdminDetails.username,
+              mobileNumber: subAdminDetails.mobileNumber,
+              subAdminId: subAdminDetails._id
             });
-          }
-          req.flash("error_msg", "Incorrect Old Password Provided");
-          res.redirect("/subadmin/manage");
-        })
-        .catch((err) => {
-          if(err){
-            console.log("Unable To Compare Passwords", err);
-          }
+          });
+        }
+        req.flash("error_msg", "Provided Detail(s) Already Exist");
+        res.render("subAdmin/updateLoginDetails", {
+          username: subAdminDetails.username,
+          mobileNumber: subAdminDetails.mobileNumber,
+          subAdminId: subAdminDetails._id
         });
-      }
-      req.flash("error_msg", "No SubAdmin's ID Matches The Provided ID");
-      res.redirect("subadmin/members");
-    })
-    .catch((err) => {
-      if(err){
-        console.log("Unable To Fetch SubAdmin Details", err);
-      }
+      })
+      .catch((err) => {
+        if(err){
+          console.log("Unable To Compare Passwords", err);
+        }
+      });
+    }
+    if(isObject(req.file)){
+      return fs.unlink("./public/img/user-images/subAdmins-image/"+subAdminImage, (err) => {
+        if(err){
+          console.log("An Error Occurred, Login Again", err);
+          req.flash("error_msg", "Old Password is Incorrect");
+          return res.render("subAdmin/updateLoginDetails", {
+            username: subAdminDetails.username,
+            mobileNumber: subAdminDetails.mobileNumber,
+            subAdminId: subAdminDetails._id
+          });
+        }
+        req.flash("error_msg", "An Error Occurred, Login Again");
+        res.render("subAdmin/updateLoginDetails", {
+          username: subAdminDetails.username,
+          mobileNumber: subAdminDetails.mobileNumber,
+          subAdminId: subAdminDetails._id
+        });
+      });
+    }
+    req.flash("error_msg", "An Error Occurred, Login Again");
+    res.render("subAdmin/updateLoginDetails", {
+      username: subAdminDetails.username,
+      mobileNumber: subAdminDetails.mobileNumber,
+      subAdminId: subAdminDetails._id
     });
-  }
-  req.flash("error_msg", "Invalid ID Provided");
-  res.redirect("subadmin/welcome");
-
+  });
 });
 
 router.delete("/delete/member", ensureSubAdminAuthentication, (req, res) => {
