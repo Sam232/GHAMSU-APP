@@ -879,6 +879,7 @@ router.put("/update/sub_admin/:id", ensureAdminAuthentication, (req, res) => {
   }).single("subAdminImage");
   
   upload(req, res, (err) => {
+    console.log(err)
     var updateDetails = {
       username: req.body.userName,
       mobileNumber: req.body.phone,
