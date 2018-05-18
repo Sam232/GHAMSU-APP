@@ -7,6 +7,7 @@ const passport = require("passport");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const path = require("path");
+const nocache = require("nocache");
 
 const admin = require("./routes/admin");
 const subAdmin = require("./routes/subAdmin");
@@ -73,7 +74,10 @@ app.use((req, res, next) => {
   res.locals.noUser = false;
   next();
 });
-                                                                                                  
+                
+//No Cache Middleware
+app.use(nocache());
+
 //Express Router
 app.use("/admin", admin);
 app.use("/subadmin", subAdmin);

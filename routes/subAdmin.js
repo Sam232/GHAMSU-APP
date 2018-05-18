@@ -24,7 +24,20 @@ var storage = multer.diskStorage({
 });
 
 router.get("/", (req, res) => {
-  res.render("subAdmin/login");
+  var subAdmin = res.locals.subAdmin;
+  var mainAdmin = res.locals.mainAdmin;
+
+  if(subAdmin || mainAdmin){
+    req.logout();
+    res.locals.noUser = false;
+    res.locals.subAdmin = null;
+    res.locals.mainAdmin = null;
+    if(!res.locals.noUser){
+      req.flash("error_msg", "Re-login To Continue Using The Application");
+      return res.render("subAdmin/login");
+    }  
+  }
+  res.render("subAdmin/login"); 
 });
 
 router.get("/welcome", ensureSubAdminAuthentication, (req, res) => {
@@ -136,7 +149,7 @@ router.post("/login", (req, res, next) => {
 router.post("/add/new/member", ensureSubAdminAuthentication, (req, res) => {
   var upload = multer({storage, fileFilter: (req, file, callback) => {
     var extname = path.extname(file.originalname);
-    if(extname == ".jpg" || extname == ".png" || extname == ".jpeg"){
+    if(extname === ".jpg" || extname === ".png" || extname === ".jpeg"){
       return callback(null, true);
     }
     callback(new Error("A Valid File With The Extension(.jpg, or .jpeg or .png) Should Be Uploaded"));
@@ -145,7 +158,7 @@ router.post("/add/new/member", ensureSubAdminAuthentication, (req, res) => {
   upload(req, res, (err) => {
     if(err){
       req.flash("error_msg", "A Valid File With The Extension(.jpg, or .jpeg or .png) Should Be Uploaded");
-      return res.render("subadmin/addmember", {
+      return res.render("subAdmin/addmember", {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         programme: req.body.programme,

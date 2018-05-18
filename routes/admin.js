@@ -21,7 +21,21 @@ const nexmo = new Nexmo({
 });
 
 router.get("/", (req, res) => {
-  res.render("admin/login");
+  var mainAdmin = res.locals.mainAdmin;
+  var subAdmin = res.locals.subAdmin;
+
+  if(mainAdmin || subAdmin){
+    req.logout();
+    res.locals.noUser = false;
+    res.locals.mainAdmin = null;
+    res.locals.subAdmin = null;
+    if(!res.locals.noUser){
+      req.flash("error_msg", "Re-login To Continue Using The Application");
+      return res.render("admin/login");
+    }  
+  }
+  res.render("admin/login");  
+  
 });
 
 router.get("/logout", ensureAdminAuthentication, (req, res) => {
